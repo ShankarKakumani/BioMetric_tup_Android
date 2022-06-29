@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 /**
  * Helper class for managing Biometric Authentication Process
  */
-object BiometricUtil {
+object BiometricKotlinUtil {
 
   /**
    * Checks if the device has Biometric support
@@ -42,6 +42,7 @@ object BiometricUtil {
         .setTitle(title)
         .setSubtitle(subtitle)
         .setDescription(description)
+        .setConfirmationRequired(true)
 
     // Use Device Credentials if allowed, otherwise show Cancel Button
     builder.apply {

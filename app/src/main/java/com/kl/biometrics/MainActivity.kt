@@ -1,13 +1,15 @@
 package com.kl.biometrics
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 
-class MainActivity : AppCompatActivity(),BiometricAuthListener {
+class MainActivity : AppCompatActivity(), BiometricAuthListener {
 
     private lateinit var buttonBiometricsLogin: Button
 
@@ -19,15 +21,24 @@ class MainActivity : AppCompatActivity(),BiometricAuthListener {
 
         //button visibility
         showBiometricLoginOption()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val hasFingerprint = packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val hasFace = packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
+            val hasIris = packageManager.hasSystemFeature(PackageManager.FEATURE_IRIS)
+        }
     }
 
 
     fun onClickBiometrics(view: View) {
-        BiometricUtil.showBiometricPrompt(
+        BiometricKotlinUtil.showBiometricPrompt(
             activity = this,
             listener = this,
             cryptoObject = null,
-            allowDeviceCredential = true
+            allowDeviceCredential = false
         )
     }
 
@@ -43,7 +54,7 @@ class MainActivity : AppCompatActivity(),BiometricAuthListener {
 
     private fun showBiometricLoginOption() {
         buttonBiometricsLogin.visibility =
-            if (BiometricUtil.isBiometricReady(this)) View.VISIBLE
+            if (BiometricKotlinUtil.isBiometricReady(this)) View.VISIBLE
             else View.GONE
     }
 }
