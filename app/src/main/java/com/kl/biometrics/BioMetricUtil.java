@@ -30,7 +30,7 @@ public class BioMetricUtil {
     /**
      * Checks if Biometric Authentication (example: Fingerprint) is set in the device
      */
-    private Boolean isBiometricReady(Context context) {
+    public Boolean isBiometricReady(Context context) {
         return hasBiometricCapability(context) == BiometricManager.BIOMETRIC_SUCCESS;
     }
 
@@ -153,7 +153,7 @@ public class BioMetricUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             hasFingerprint = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FINGERPRINT);
         }
-        return isBiometricReady(context) && hasFingerprint;
+        return hasFingerprint;
     }
 
     /**
@@ -164,6 +164,7 @@ public class BioMetricUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             hasFace = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FACE);
         }
-        return isBiometricReady(context) && hasFace;
+        return hasFace;
     }
 }
+
